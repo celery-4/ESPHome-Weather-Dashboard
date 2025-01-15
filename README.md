@@ -4,7 +4,7 @@ This Uses Home Assistant paired with ESPHome to make a weather dashboard. Others
 ## Contents
 - [Hardware](#hardware)
 - [Wiring](#wiring)
-- [Home Assistant Prep](#HomeAssistantPrepWork)
+- [Home Assistant Prep Work](#HomeAssistantPrepWork)
 - [ESPHome Setup](#ESPHome-Setup)
   -   [YAML](#YAML)
 
@@ -26,7 +26,9 @@ I found the data in Pirate Weather to be the most accurate for my location and i
 
   <i>Important! I configured mine to check both the "Sensor" and "Weather" options. This will make a bunch of entities in your home assistant. If that is a problem for you then you will have heavier edits to my setup. My setup utilizes the sensors, this will likely make the most difference in the Automation setup in Home Assistant. </i>
 
-- <b>Step 3:</b> Create Helpers. This will make life 1,000x easier in ESPHome. These are to format text like days ("Mon", "Tues", etc) and times ("1PM", "10AM", etc) in Home Assistant that you can pull into ESPHome already formatted. We will make an automation to fill these in on a schedule. You need to make one for each day you are forecasting in the middle daily section and each hour you have in the hourly section. 
+- <b>Step 3:</b> Create Helpers. This will make life 1,000x easier in ESPHome. We will make an automation to fill these in on a schedule.
+
+    These are to format text like days ("Mon", "Tues", etc) and times ("1PM", "10AM", etc) in Home Assistant that you can pull into ESPHome already formatted.  You need to make one for each day you      are forecasting in the middle daily section and each hour you have in the hourly section. If you have other text that you want to dynamically change its a good idea to make them now. 
 
   - Go to your Home Assistant integration go to "Settings", "Helpers", "Create Helper". 
 
@@ -34,4 +36,12 @@ I found the data in Pirate Weather to be the most accurate for my location and i
 
       <i>I followed a format of "Weather: PW: Day X Name" and "Weather: PW: Time XH Name". Additionally, be consistent in your entity IDs (ex: "input_text.pw_day_x_name" and "input_text.pw_time_xh_name")</i>
 
-- <b>Step 4:</b> Create an Automation to set the values in the Helpers we created. 
+- <b>Step 4:</b> Create an Automation to set the values in the Helpers we created. The idea behind this automation is to set a trigger of something like every hour on the 2nd minute, set the helpers you made before to the formatted value of text you would like ("Mon", "2pm", etc). The speediest way to is to create an automation and copy my yaml but change as you need. However, I laid out the steps below. 
+
+  1.  Go to the Automations page in your Home Assistant setup.
+  2. Under "When", Click "+ Add Trigger"
+  3. Select "Time and Location"
+  4. Select "Time Pattern"
+  5. In the "Minutes" section type in the minute you want it to run. I suggest a couple mins into an hour to make sure your sensors have updated. For example if you type in "2" then it will run on the 2nd minute of every hour.
+  6. Now you will have to go to the YAML view. Click the top right 3 button menu. and select "Edit in YAML"
+  7. 
