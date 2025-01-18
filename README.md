@@ -4,9 +4,10 @@ This Uses Home Assistant paired with ESPHome to make a weather dashboard. Others
 ## Contents
 - [Hardware](#hardware)
 - [Wiring](#wiring)
-- [Home Assistant Prep Work](#HomeAssistantPrepWork)
+- [Home Assistant Prep Work](#home-assistant-prep-work)
 - [ESPHome Setup](#ESPHome-Setup)
-  -   [YAML](#YAML)
+  -   [YAML](#yaml)
+- [Case](#case)
 
 ## Hardware
 
@@ -44,4 +45,18 @@ I found the data in Pirate Weather to be the most accurate for my location and i
   4. Select "Time Pattern"
   5. In the "Minutes" section type in the minute you want it to run. I suggest a couple mins into an hour to make sure your sensors have updated. For example if you type in "2" then it will run on the 2nd minute of every hour.
   6. Now you will have to go to the YAML view. Click the top right 3 button menu. and select "Edit in YAML"
-  7. 
+  7. Under "actions:" you will need to put in a block similar to the below for each of your days/hours". You can use the Developer Tools, Template to play with the formatting you want. The "value" below is to change the datetime of the priate weather sensor to an abbreviated day name. See the guide here (https://esphome.io/components/time/). It then sets the helper that was created in step 3 to that text. 
+     ```
+     actions:
+      - action: input_text.set_value
+        metadata: {}
+        data:
+         value: "{{ as_datetime(states('sensor.pirateweather_time_0d')).strftime('%a') }}"
+        target:
+         entity_id: input_text.pw_day_0_name
+  8. Name and Save the Automation
+ 
+## Case
+Lilifee made a beautiful case here (https://www.printables.com/model/47605-e-paper-display-stand-esp32)
+
+Spanholz made another great case that has lots of room for batteries or whatever you may want to store (https://www.printables.com/model/657756-simple-case-for-esp32-weather-station)
